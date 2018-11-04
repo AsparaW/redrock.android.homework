@@ -1,6 +1,5 @@
 public class Player {
     private static final int CARD_SUM = 5;
-    private static final String[] STATES = {"无牛", "有牛", "牛牛", "四花", "五花", "五小", "炸弹"};
     public String name = "";
     private int nowCard = 0;
     private int biggestPoint = 0;

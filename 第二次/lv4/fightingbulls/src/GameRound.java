@@ -139,12 +139,13 @@ public class GameRound {
     }
 
     private void giveAllPlayersCards(String indexStr) {
-        int[] index = new int[players * CARDS_PER_PLAYER];
-        String[] tempStr = new String[players * CARDS_PER_PLAYER];
+        System.out.println("indexStr = " + indexStr);
+        String[] tempStr ;
         tempStr = indexStr.split(",");
+        System.out.println("tempStr = " + tempStr);
         for (int i = 0; i < players * CARDS_PER_PLAYER; i++) {
             player[i / CARDS_PER_PLAYER].setCard(card[Integer.parseInt(tempStr[i]) - 1]);
-            System.out.println("玩家" + (i / CARDS_PER_PLAYER + 1) + " " + player[i % players].name + " " + "拿到了" + "card " + (i + 1) + " = " + card[i].getSuit() + " " + card[i].getFace());
+            System.out.println("玩家" + (i / CARDS_PER_PLAYER + 1) + " " + player[i / CARDS_PER_PLAYER].name + " " + "拿到了" + "card " + Integer.parseInt(tempStr[i]) + " = " + card[Integer.parseInt(tempStr[i]) - 1].getSuit() + " " + card[Integer.parseInt(tempStr[i]) - 1].getFace());
         }
     }
 
