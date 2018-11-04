@@ -1,4 +1,4 @@
-#斗牛
+斗牛
 ======
 玩法：https://baike.baidu.com/item/%E6%96%97%E7%89%9B/10173143
 <br>
