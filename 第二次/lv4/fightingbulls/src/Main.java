@@ -14,26 +14,26 @@ public class Main {
                         int control = Integer.parseInt(mySc.nextLine());
                         if (control > 1) {
                             GameRound myGame = new GameRound(control);
+                            if (myGame.mode == -1)
+                                break;
                             System.out.println("是否打开给牌模式？ （Y/N）");
-                            String temp=mySc.nextLine();
+                            String temp = mySc.nextLine();
                             if (temp.equals("Y") || temp.equals("y")) {
                                 myGame.setMode(1);
                                 myGame.printOrder();
                                 System.out.println("输入给牌");
                                 myGame.newRoundSelect(mySc.nextLine());
-                            }
-                            else
+                            } else
                                 myGame.newRound();
                             while (true) {
                                 System.out.println("继续吗？（Y/N）");
-                                temp=mySc.nextLine();
+                                temp = mySc.nextLine();
                                 if (temp.equals("Y") || temp.equals("y"))
-                                    if (myGame.mode==1){
+                                    if (myGame.mode == 1) {
                                         myGame.printOrder();
                                         System.out.println("输入给牌");
                                         myGame.newRoundSelect(mySc.nextLine());
-                                    }
-                                    else
+                                    } else
                                         myGame.newRound();
                                 else
                                     break;
@@ -48,7 +48,7 @@ public class Main {
                     myGame.newRound();
                     while (true) {
                         System.out.println("继续吗？（Y/N）");
-                        String temp=mySc.nextLine();
+                        String temp = mySc.nextLine();
                         if (temp.equals("Y") || temp.equals("y"))
                             myGame.newRound();
                         else

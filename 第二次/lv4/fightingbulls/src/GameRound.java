@@ -7,8 +7,8 @@ public class GameRound {
     private static final String[] STATES_DANNIU_STATE = {"", "牛一", "牛二", "牛三", "牛四", "牛五", "牛六", "牛七", "牛八", "牛九"};
     private static final int CARD_LENGTH = 52;
     private static final int CARDS_PER_PLAYER = 5;
-    private static final long E14 =100000000000000L;
-    private static final long E11 =100000000000L;
+    private static final long E14 = 100000000000000L;
+    private static final long E11 = 100000000000L;
 
     private static int maxplayer;
     private static int nowRound = 0;
@@ -22,12 +22,13 @@ public class GameRound {
 
     GameRound(int players) {
         this.players = players;
-        maxplayer = CARD_LENGTH / players;
+        maxplayer = CARD_LENGTH / CARDS_PER_PLAYER;
         if (players <= maxplayer) {
             createCard();
             createPlayers();
         } else {
             System.out.println("玩家数过多！无法开始游戏！");
+            mode = -1;
         }
     }
 
@@ -142,8 +143,8 @@ public class GameRound {
         String[] tempStr = new String[players * CARDS_PER_PLAYER];
         tempStr = indexStr.split(",");
         for (int i = 0; i < players * CARDS_PER_PLAYER; i++) {
-            player[i /CARDS_PER_PLAYER].setCard(card[Integer.parseInt(tempStr[i])-1]);
-            System.out.println("玩家" + (i /CARDS_PER_PLAYER + 1) + " " + player[i % players].name + " " + "拿到了" + "card " + (i + 1) + " = " + card[i].getSuit() + " " + card[i].getFace());
+            player[i / CARDS_PER_PLAYER].setCard(card[Integer.parseInt(tempStr[i]) - 1]);
+            System.out.println("玩家" + (i / CARDS_PER_PLAYER + 1) + " " + player[i % players].name + " " + "拿到了" + "card " + (i + 1) + " = " + card[i].getSuit() + " " + card[i].getFace());
         }
     }
 
@@ -297,35 +298,35 @@ public class GameRound {
             switch (cases) {
                 case 6:
                     nowScore = 0;
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 5:
                     nowScore = (long) 1e2;
                     nowScore = 100 * player[nowPlayer].getTestPoint();
                     //最大只能加900
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     //最大只能加51
                     break;
                 case 4:
                     nowScore = (long) 1e5;
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 3:
                     nowScore = (long) 1e7;
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 2:
                     nowScore = (long) 1e9;
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 1:
                     nowScore = E11;
                     nowScore = 100 * player[nowPlayer].getTestPoint();
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 0:
                     nowScore = E14;
-                    nowScore += (long)player[nowPlayer].getBiggestPoint();
+                    nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
             }
             player[nowPlayer].setTestScore(nowScore);
