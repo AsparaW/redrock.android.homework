@@ -21,7 +21,7 @@ public class Main {
                             if (temp.equals("Y") || temp.equals("y")) {
                                 myGame.setMode(1);
                                 myGame.printOrder();
-                                System.out.println("输入给牌");
+                                System.out.println("输入给牌（格式：牌1序号，牌2序号，...，牌玩家数*5序号）");
                                 myGame.newRoundSelect(mySc.nextLine());
                             } else
                                 myGame.newRound();
@@ -31,7 +31,7 @@ public class Main {
                                 if (temp.equals("Y") || temp.equals("y"))
                                     if (myGame.mode == 1) {
                                         myGame.printOrder();
-                                        System.out.println("输入给牌");
+                                        System.out.println("输入给牌（格式：牌1序号，牌2序号，...，牌玩家数*5序号）");
                                         myGame.newRoundSelect(mySc.nextLine());
                                     } else
                                         myGame.newRound();
