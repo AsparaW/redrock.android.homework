@@ -1,33 +1,39 @@
 public class GameRound {
-    private static final String SUIT[] = {"黑桃", "梅花", "红心", "方块"};
-    private static final String FACE[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-    private static final String SUIT_ORDER[] = {"方块", "梅花", "红心", "黑桃"};//牌买来是黑桃梅花的顺序，但是比大小是按照黑红梅方的顺序
+    private static final String[] SUIT = {"黑桃", "梅花", "红心", "方块"};
+    private static final String[] FACE = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    private static final String[] SUIT_ORDER = {"方块", "梅花", "红心", "黑桃"};//牌买来是黑桃梅花的顺序，但是比大小是按照黑红梅方的顺序
     private static final String[] STATES = {"炸弹", "五小", "五花", "四花", "牛牛", "有牛", "无牛"};
     private static final String[] STATES_WUXIAO_STATE = {"", "", "", "", "", "5点", "6点", "7点", "8点", "9点", "10点"};
     private static final String[] STATES_DANNIU_STATE = {"", "牛一", "牛二", "牛三", "牛四", "牛五", "牛六", "牛七", "牛八", "牛九"};
+    private static final String DIVIDE_LINE = "----------------------------------------------------";
+    private static final String SHUFFLE_DONE = "------已洗牌------";
+    private static final String SHOW_POKER = "全新扑克：";
+    private static final String ERROR_TOO_MANY_PLAYERS = "玩家数过多！无法开始游戏！";
+    private static final String SHOW_MODE = "选牌模式已开";
+
     private static final int CARD_LENGTH = 52;
     private static final int CARDS_PER_PLAYER = 5;
     private static final long E14 = 100000000000000L;
     private static final long E11 = 100000000000L;
 
-    private static int maxplayer;
+    private static int maxPlayer;
     private static int nowRound = 0;
     public int mode = 0;
+    public Player[] player;
     private int players;
     private Card[] card = new Card[CARD_LENGTH];
-    private Player[] player;
     private int nextIndex = 0;
     private long[] score;
-
+    private int[] rankList;
 
     GameRound(int players) {
         this.players = players;
-        maxplayer = CARD_LENGTH / CARDS_PER_PLAYER;
-        if (players <= maxplayer) {
+        maxPlayer = CARD_LENGTH / CARDS_PER_PLAYER;
+        if (players <= maxPlayer) {
             createCard();
             createPlayers();
         } else {
-            System.out.println("玩家数过多！无法开始游戏！");
+            System.out.println(ERROR_TOO_MANY_PLAYERS);
             mode = -1;
         }
     }
@@ -39,6 +45,7 @@ public class GameRound {
     public void rounds(int rounds) {
         for (int i = 0; i < rounds; i++) {
             newRound();
+            System.out.println("nowRound = " + nowRound);
         }
     }
 
@@ -51,7 +58,7 @@ public class GameRound {
     }
 
     public void newRoundSelect(String module) {
-        System.out.println("选牌模式已开");
+        System.out.println(SHOW_MODE);
         giveAllPlayersCards(module);
         calculate();
         nowRound++;
@@ -64,6 +71,21 @@ public class GameRound {
                     long temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public void sortRank(long[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] < arr[j + 1]) {
+                    long temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    int tmp = rankList[j];
+                    rankList[j] = rankList[j + 1];
+                    rankList[j + 1] = tmp;
                 }
             }
         }
@@ -92,13 +114,14 @@ public class GameRound {
                 nextIndex++;
             }
         }
-        System.out.println("全新扑克：");
+        System.out.println(SHOW_POKER);
         printOrder();
     }
 
     private void createPlayers() {
         player = new Player[players];
         score = new long[players];
+        rankList = new int[players];
         for (int i = 0; i < players; i++) {
             player[i] = new Player();
         }
@@ -110,7 +133,7 @@ public class GameRound {
             card[i].randomizeWeight();
         }
         sortWeight();
-        System.out.println("------已洗牌------");
+        System.out.println(SHUFFLE_DONE);
     }
 
     private void sortWeight() {
@@ -132,6 +155,9 @@ public class GameRound {
     }
 
     private void giveAllPlayersCards() {
+        for (int i = 0; i < players; i++) {
+            player[i].clearBiggestPoint();
+        }
         for (int i = 0; i < players * CARDS_PER_PLAYER; i++) {
             player[i % players].setCard(card[i]);
             System.out.println("玩家" + (i % players + 1) + " " + player[i % players].name + " " + "拿到了" + "card " + (i + 1) + " = " + card[i].getSuit() + " " + card[i].getFace());
@@ -139,13 +165,16 @@ public class GameRound {
     }
 
     private void giveAllPlayersCards(String indexStr) {
+        for (int i = 0; i < players; i++) {
+            player[i].clearBiggestPoint();
+        }
         System.out.println("indexStr = " + indexStr);
-        String[] tempStr ;
+        String[] tempStr;
         tempStr = indexStr.split(",");
         System.out.println("tempStr = " + tempStr);
         for (int i = 0; i < players * CARDS_PER_PLAYER; i++) {
             player[i / CARDS_PER_PLAYER].setCard(card[Integer.parseInt(tempStr[i]) - 1]);
-            System.out.println("玩家" + (i / CARDS_PER_PLAYER + 1) + " " + player[i / CARDS_PER_PLAYER].name + " " + "拿到了" + "card " + Integer.parseInt(tempStr[i]) + " = " + card[Integer.parseInt(tempStr[i]) - 1].getSuit() + " " + card[Integer.parseInt(tempStr[i]) - 1].getFace());
+            System.out.println("玩家" + (i / CARDS_PER_PLAYER + 1) + "：" + player[i / CARDS_PER_PLAYER].name + " 拿到了" + "card " + Integer.parseInt(tempStr[i]) + " = " + card[Integer.parseInt(tempStr[i]) - 1].getSuit() + " " + card[Integer.parseInt(tempStr[i]) - 1].getFace());
         }
     }
 
@@ -303,7 +332,7 @@ public class GameRound {
                     break;
                 case 5:
                     nowScore = (long) 1e2;
-                    nowScore = 100 * player[nowPlayer].getTestPoint();
+                    nowScore += 100 * player[nowPlayer].getTestPoint();
                     //最大只能加900
                     nowScore += (long) player[nowPlayer].getBiggestPoint();
                     //最大只能加51
@@ -322,7 +351,7 @@ public class GameRound {
                     break;
                 case 1:
                     nowScore = E11;
-                    nowScore = 100 * player[nowPlayer].getTestPoint();
+                    nowScore += 100 * player[nowPlayer].getTestPoint();
                     nowScore += (long) player[nowPlayer].getBiggestPoint();
                     break;
                 case 0:
@@ -347,26 +376,91 @@ public class GameRound {
         }
         //全部玩家的牌最大价值生成完毕，开始比较
         sortNumber(score);
+        int winScore = 0;
+        int loseScore = 0;
+
+        System.out.println(DIVIDE_LINE);
         for (int rank = 0; rank < players; rank++) {
             for (int nowPlayer = 0; nowPlayer < players; nowPlayer++) {
                 if (player[nowPlayer].getTestScore() == score[rank]) {
-                    System.out.println("第" + (rank + 1) + "名 ： 玩家" + (nowPlayer + 1) + " " + player[nowPlayer].name);
+                    System.out.println();
+                    System.out.println("第" + (rank + 1) + "名 ： 玩家" + (nowPlayer + 1) + "：" + player[nowPlayer].name);
                     System.out.print("该玩家的牌为 ：");
                     for (int nowCard = 0; nowCard < CARDS_PER_PLAYER; nowCard++) {
-                        System.out.print(player[nowPlayer].getCard(nowCard).getSuit() + player[nowPlayer].getCard(nowCard).getFace());
+                        System.out.print(player[nowPlayer].getCard(nowCard).getSuit() + player[nowPlayer].getCard(nowCard).getFace() + " ");
                     }
                     System.out.print("   最大牌 ： " + player[nowPlayer].getCard(player[nowPlayer].getBiggestIndex()).getSuit() + player[nowPlayer].getCard(player[nowPlayer].getBiggestIndex()).getFace());
                     System.out.println();
                     if (player[nowPlayer].getState().equals(STATES[5])) {
-                        System.out.println("牌型为 " + player[nowPlayer].getState() + "：" + STATES_DANNIU_STATE[player[nowPlayer].getTestPoint()]);
+                        System.out.println("牌型为 " + player[nowPlayer].getState() + " - " + STATES_DANNIU_STATE[player[nowPlayer].getTestPoint()]);
                     } else if (player[nowPlayer].getState().equals(STATES[1])) {
-                        System.out.println("牌型为 " + player[nowPlayer].getState() + "：" + STATES_WUXIAO_STATE[player[nowPlayer].getTestPoint()]);
+                        System.out.println("牌型为 " + player[nowPlayer].getState() + " - " + STATES_WUXIAO_STATE[player[nowPlayer].getTestPoint()]);
                     } else {
                         System.out.println("牌型为 " + player[nowPlayer].getState());
                     }
+
+                    //得点计算
+                    if (rank == 0) {
+                        for (int j = 0; j < STATES.length; j++) {
+                            if (player[nowPlayer].getState().equals(STATES[j])) {
+                                if (j == 0) winScore = 200000;
+                                else if (j == 1) {
+                                    winScore = 50000;
+                                    int times = STATES_WUXIAO_STATE.length - 1 - player[nowPlayer].getTestPoint();
+                                    winScore += times * 10000;
+                                } else if (j == 2) winScore = 20000;
+                                else if (j == 3) winScore = 10000;
+                                else if (j == 4) winScore = 2000;
+                                else if (j == 5) {
+                                    winScore = 100;
+                                    int times = player[nowPlayer].getTestPoint();
+                                    winScore += times * 100;
+                                } else if (j == 6) winScore = 0;
+                                break;
+                            }
+                        }
+                        winScore += player[nowPlayer].getCard(player[nowPlayer].getBiggestIndex()).getComparePoint();
+                        loseScore = winScore;
+                        winScore *= players - 1;
+                        player[nowPlayer].addCash(winScore);
+                        player[nowPlayer].addWins();
+                        System.out.println("玩家" + (nowPlayer + 1) + " " + player[nowPlayer].name + "赢了" + winScore + "，现在他的金钱有：" + player[nowPlayer].getCash());
+
+                    } else {
+                        player[nowPlayer].addCash(-loseScore);
+                        player[nowPlayer].addLoses();
+                        System.out.println("玩家" + (nowPlayer + 1) + " " + player[nowPlayer].name + "输了" + loseScore + "，现在他的金钱有：" + player[nowPlayer].getCash());
+                    }
+                /*                得点计算规则：(基础分+牌顺序大小（方块A0分，黑桃K51分）)*玩家数
+                  基础分
+                  无牛 0
+                  单牛 100 牛一 ---- 牛九 100-900
+                  牛牛 2000
+                  四花 10000
+                  五花 20000
+                  五小 50000  5点-10点 100000-50000
+                  炸弹 200000
+                  */
+                    break;
                 }
             }
         }
+        printRank();
+    }
+
+    public void printRank() {
+        System.out.println(DIVIDE_LINE);
+        long tempScore[] = new long[players];
+        for (int i = 0; i < players; i++)
+            rankList[i] = i;
+        for (int i = 0; i < players; i++)
+            tempScore[i] = player[i].getCash();
+        sortRank(tempScore);
+        for (int i = 0; i < players; i++) {
+            int nowPlayer = rankList[i];
+            System.out.println("第 " + (i + 1) + "名  玩家" + (nowPlayer + 1) + " " + player[nowPlayer].name + "   总分" + player[nowPlayer].getCash() + "   胜" + player[nowPlayer].getWins() + "  负" + player[nowPlayer].getLoses());
+        }
+        System.out.println(DIVIDE_LINE);
     }
 
     public void setMode(int mode) {

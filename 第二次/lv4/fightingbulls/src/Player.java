@@ -1,6 +1,8 @@
 public class Player {
     private static final int CARD_SUM = 5;
     public String name = "";
+
+    private int cash = 500000;
     private int nowCard = 0;
     private int biggestPoint = 0;
     private int biggestIndex = 0;
@@ -12,6 +14,14 @@ public class Player {
 
     Player() {
         this.name = "无名氏";
+    }
+
+    public void setName(String name) {
+        if (name.equals("")) {
+            this.name = "无名氏";
+        } else {
+            this.name = name;
+        }
     }
 
     public int getBiggestIndex() {
@@ -28,7 +38,7 @@ public class Player {
             }
         }
         if (nowCard == 5) nowCard = 0;
-    }
+    }//理牌，理出最大牌
 
     public Card getCard(int index) {
         return this.card[index];
@@ -60,5 +70,33 @@ public class Player {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void addWins() {
+        this.wins++;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void addLoses() {
+        this.loses++;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public void addCash(int cash) {
+        this.cash += cash;
+    }
+
+    public void clearBiggestPoint() {
+        this.biggestPoint = 0;
     }
 }
