@@ -17,7 +17,7 @@ public class GameRound {
     private static final long E11 = 100000000000L;
 
     private static int maxPlayer;
-    private static int nowRound = 0;
+    private int nowRound = 0;
     public int mode = 0;
     public Player[] player;
     private int players;
@@ -38,7 +38,7 @@ public class GameRound {
         }
     }
 
-    public static int getNowRound() {
+    public int getNowRound() {
         return nowRound;
     }
 
