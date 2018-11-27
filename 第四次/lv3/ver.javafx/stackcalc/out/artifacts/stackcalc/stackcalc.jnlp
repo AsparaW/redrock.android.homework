@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="stackcalc.jnlp">
+    <information>
+        <title>UI</title>
+        <vendor>未知</vendor>
+        <description>UI</description>
+        <offline-allowed/>
+    </information>
+    <update check="background"/>
+    <resources>
+        <j2se version="10.0.2+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="stackcalc.jar" size="8141" download="eager"/>
+    </resources>
+    <jfx:javafx-desc width="600" height="400" main-class="sample.UI" name="UI"/>
+</jnlp>
+

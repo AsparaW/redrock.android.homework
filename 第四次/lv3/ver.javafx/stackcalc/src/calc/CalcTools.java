@@ -22,6 +22,7 @@ public class CalcTools {
     public CalcTools(String str) {
         off = false;
         str = str.replaceAll("[\\s]", "");//trim
+        str = str.replaceAll(",","");
         str = str.replaceAll("÷", "/");
         str = str.replaceAll("＋", "+");
         str = str.replaceAll("×", "*");
