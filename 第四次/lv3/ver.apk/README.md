@@ -1,4 +1,4 @@
-四则运算计算器 javafx ver.
+四则运算计算器 Android ver.
 ----------------------------
 as easy as shown
 <center>
