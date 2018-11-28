@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">stackfastcalc</string>
+    <string name="label">四则计算器</string>
+    <string name="input_here">input here</string>
+    <string name="_0">0</string>
+    <string name="cdivide">÷</string>
+    <string name="cplus">+</string>
+    <string name="cminus">-</string>
+    <string name="cmul">×</string>
+    <string name="ccr">)</string>
+    <string name="ccl">(</string>
+    <string name="c">C</string>
+    <string name="_00">00</string>
+    <string name="cequal">＝</string>
+    <string name="cdot">.</string>
+    <string name="_2">2</string>
+    <string name="_5">5</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="_3">3</string>
+    <string name="_1">1</string>
+    <string name="_4">4</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="tg">退格</string>
+</resources>
