@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">fakeneteasecloudmusic</string>
+    <string name="todo">TODO</string>
+    <string name="str_reg">注册</string>
+    <string name="str_login">登录</string>
+    <string name="str_qtdlfs">其他登录方式</string>
+    <string name="str_wyyx">网易邮箱</string>
+    <string name="str_wx">微信</string>
+    <string name="str_wb">微博</string>
+    <string name="qq">QQ</string>
+
+</resources>
