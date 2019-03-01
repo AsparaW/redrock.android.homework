@@ -22,6 +22,7 @@ import android.widget.Toolbar;
 import com.mantouland.fakezhihuribao.controller.NewsController;
 import com.mantouland.fakezhihuribao.tool.HttpHelper;
 
+import java.sql.NClob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ViewPassage extends AppCompatActivity {
     private static final String TAG = "VP";
     int webid;
     String tempWeb;
+    String tempCss;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,17 +87,25 @@ public class ViewPassage extends AppCompatActivity {
 
         WebView webView = new WebView(this);
         //webView.loadUrl(url);
-        webView.loadDataWithBaseURL(null, tempWeb , "text/html", "UTF-8", null);
+        //tempWeb = tempWeb.replace("<img","<img style=\"max-width:100%;height:auto");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
+        webView.getSettings().setDefaultFontSize(32);
+
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+
 
         webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
 
-        webView.getSettings().setDefaultFontSize(32);
+        webView.loadDataWithBaseURL(tempCss, tempWeb , "text/html", "UTF-8", null);
+
+
+
         viewList.add(webView);
     }
     @Override
@@ -111,6 +121,14 @@ public class ViewPassage extends AppCompatActivity {
         public void run() {
             HttpHelper.getInstance().run();
             tempWeb=NewsController.getInstance().getArticle(Integer.toString(webid)).getBody();
+            String cssUrl=NewsController.getInstance().getArticle(Integer.toString(webid)).getCss().get(0);
+            cssUrl=cssUrl.replace("http","https");
+            Log.d(TAG, "run: "+cssUrl);
+            HttpHelper.setUrl(cssUrl);
+            HttpHelper.getInstance().run();
+            Log.d(TAG, "run: "+HttpHelper.getTemp());
+            tempCss=HttpHelper.getTemp();
+            Log.d(TAG, "run:CSS "+tempCss);
             handler.sendEmptyMessage(1);
         }
     };

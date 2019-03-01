@@ -55,7 +55,7 @@ public class PageAdapter extends PagerAdapter {
                 //onItemClickListener.onItemClick(viewHolder.itemView,i);
                 Toast.makeText(v.getContext(),"clicked",Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
-                bundle.putInt("webid",id.get(position%pics.size()));
+                bundle.putInt("webid",id.get(position%id.size()));
                 Intent intent=new Intent(v.getContext(),ViewPassage.class);
                 intent.putExtras(bundle);
                 v.getContext().startActivity(intent);

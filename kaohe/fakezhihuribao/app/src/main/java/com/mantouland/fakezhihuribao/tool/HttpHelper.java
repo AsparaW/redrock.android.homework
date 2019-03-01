@@ -49,6 +49,7 @@ public class HttpHelper extends Thread {
         String readLine;
         try {
             u = new URL(url);
+            Log.d("CONNECT", "URLRunner: "+url);
             httpURLConnection = (HttpURLConnection) u.openConnection();
             int responce = httpURLConnection.getResponseCode();
             if (responce == 200) {
