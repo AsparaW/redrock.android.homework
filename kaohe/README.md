@@ -1,16 +1,20 @@
 
 
 # 知乎日报
-##截图不代表最终结果
+<br>截图不代表最终结果
+<br>
 功能1：
 <img src="https://github.com/AsparaW/redrock.android.homework/blob/master/kaohe/img/1.png" width = "50%" height="50%"/>
 <br>
 看首页
+<br>
 功能2：
 <img src="https://github.com/AsparaW/redrock.android.homework/blob/master/kaohe/img/2.png" width = "50%" height="50%"/>
 <br>
 看新闻
+<br>
 功能3：
 <img src="https://github.com/AsparaW/redrock.android.homework/blob/master/kaohe/img/3.png" width = "50%" height="50%"/>
 <br>
 看评论
+<br>
