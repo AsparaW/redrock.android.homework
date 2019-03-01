@@ -92,6 +92,9 @@ public class ViewPassage extends AppCompatActivity {
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+
+        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
+
         webView.getSettings().setDefaultFontSize(32);
         viewList.add(webView);
     }
