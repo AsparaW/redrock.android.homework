@@ -86,7 +86,6 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.MyViewHolder
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             itemRootView = itemView;
-            imageView=itemView.findViewById(R.id.avatar1);
             textName=itemView.findViewById(R.id.thenametext);
             textTime=itemView.findViewById(R.id.thetimetext);
             textContent=itemView.findViewById(R.id.words1);

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ImageView> mList=new ArrayList<>();
     private List<New> todayList=new ArrayList<>();
+    private List<New> tempMore =new ArrayList<>();
 
     HotNew hotNew;
     boolean isPicStop=false;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case MotionEvent.ACTION_UP:{
                         if(scrollView.getChildAt(0).getMeasuredHeight()<=scrollView.getScrollY()+scrollView.getHeight()){
-                            Log.d(TAG, "onTouch: ");
+                            askMore();
                         }else{
                         }
                         break;
@@ -168,6 +169,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @SuppressLint("ClickableViewAccessibility")
+    protected void setMoreList(){
+
+        mainLinearLayout=findViewById(R.id.mainll);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        ConstraintLayout view = (ConstraintLayout) inflater.inflate(R.layout.frag_main, null);
+        mainLinearLayout.addView(view);
+        RecyclerView recyclerView= (RecyclerView) view.getChildAt(1);
+        TextView textView=(TextView)view.getChildAt(0);
+        textView.setText(tempMore.get(0).getTime());
+
+        List<New> newList=tempMore;
+        RecAdapter recAdapter=new RecAdapter();
+        recAdapter.setContext(this);
+        recAdapter.setData(newList);
+        Log.d(TAG, "setMoreList: "+newList.get(0).getPic());
+        recyclerView.setAdapter(recAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setFocusable(false);
+        //
+        //
+        //
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_MOVE:{
+                        break;
+                    }
+                    case MotionEvent.ACTION_DOWN:{
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        if(scrollView.getChildAt(0).getMeasuredHeight()<=scrollView.getScrollY()+scrollView.getHeight()){
+                            Log.d(TAG, "onTouch: ");
+                            askMore();
+                        }else{
+                        }
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
 
 
 
@@ -199,12 +256,17 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0;i<hotNew.getTop_stories().size();i++){
             stringList.add(hotNew.getTop_stories().get(i).getTitle());
         }
-        pagerAdapter=new PageAdapter(this,imgRes,stringList);
+        List<Integer> id=new ArrayList<>();
+        for (int i=0;i<hotNew.getTop_stories().size();i++){
+            id.add(hotNew.getTop_stories().get(i).getId());
+        }
+        pagerAdapter=new PageAdapter(this,imgRes,stringList,id);
         Log.d(TAG, "setViewPager: "+pagerAdapter);
         viewPager.setAdapter(pagerAdapter);
         //
         //
         //
+
 
     }
     private void setRec() {
@@ -212,10 +274,7 @@ public class MainActivity extends AppCompatActivity {
         recAdapter.setContext(this);
         setAskImageFirstOver();
     }
-    private void setRecOver(){
 
-        Log.d(TAG, "setList: "+ recAdapter.getItemCount());
-    }
 
     private boolean checkPermission() {
         boolean hasPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
@@ -255,14 +314,8 @@ public class MainActivity extends AppCompatActivity {
     protected void askToday() {
         new Thread(runnableGetToday).start();
     }
-    protected void askListView(){
 
 
-    }
-
-    protected void setAskImageFirstOver(){
-        new Thread(runnableGetTodayImage).start();
-    }
     Runnable runnableGetToday = new Runnable() {
         @Override
         public void run() {
@@ -273,6 +326,26 @@ public class MainActivity extends AppCompatActivity {
             }
     };
 
+    protected void askMore() {
+        NewsController.getInstance().dateMinus();
+        new Thread(runnableGetMore).start();
+    }
+
+
+    Runnable runnableGetMore = new Runnable() {
+        @Override
+        public void run() {
+           tempMore=NewsController.getInstance().getBeforeNew();
+            //cover
+            handler.sendEmptyMessage(4);
+
+        }
+    };
+
+
+    protected void setAskImageFirstOver(){
+        new Thread(runnableGetTodayImage).start();
+    }
     Runnable runnableGetTodayImage = new Runnable() {
         @Override
         public void run() {
@@ -305,8 +378,9 @@ public class MainActivity extends AppCompatActivity {
                 initView();
                 setRec();
             }else if (msg.what==ASK_IMAGE_FIRST_OVER){
-                setRecOver();
                 setList();
+            }else if (msg.what==4){
+                setMoreList();
             }
         }
     };

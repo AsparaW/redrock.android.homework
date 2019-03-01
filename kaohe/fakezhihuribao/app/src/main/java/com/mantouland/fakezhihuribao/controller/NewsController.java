@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.mantouland.fakezhihuribao.bean.Article;
+import com.mantouland.fakezhihuribao.bean.BeforeNew;
 import com.mantouland.fakezhihuribao.bean.Comment;
 import com.mantouland.fakezhihuribao.bean.Extra;
 import com.mantouland.fakezhihuribao.bean.HotNew;
@@ -32,12 +33,17 @@ public class NewsController {
     private static final String apiUrlShortSuf="/short-comments";
     private static final String apiUrlLongSuf="/long-comments";
 
+    int round=0;
     private static final String TAG = "NEWSTEST";
     private static final int PICSIZE=5;
     private static final NewsController instance = new NewsController();
     private NewsController(){
             setDate();
     }
+    public String getDate() {
+        return date;
+    }
+
     public void setDate(){
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
         Date curDate = new Date(System.currentTimeMillis());
@@ -45,7 +51,8 @@ public class NewsController {
     }
     public void dateMinus(){
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date curDate = new Date(System.currentTimeMillis()- 86400000L);
+        round++;
+        Date curDate = new Date(System.currentTimeMillis()- round*86400000L);
         date = sDateFormat.format(curDate);
     }
     public static NewsController getInstance(){
@@ -138,5 +145,36 @@ public class NewsController {
         }
         return tempComment;
     }
+    public List<New> getBeforeNew(){
+        String add=date;
+        String theUrl=apiUrlBefore+add;
+        HttpHelper.setUrl(theUrl);
+        Log.d(TAG, "getBeforeNew: "+theUrl);
+        BeforeNew beforeNew=new BeforeNew();
+        new HttpHelper().run();
+        try {
+            beforeNew =JsonResolver.getInstance().moreInfoDealer(HttpHelper.getTemp());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        List<New> tempList=new ArrayList<>();
+        for (int i=0;i<beforeNew.getStories().size();i++){
+            New temp=new New();
+            String url=beforeNew.getStories().get(i).getImages().get(0);
+            url=url.replace("\\","");
+            url=url.replace("\"","");
+            url=url.replace("]","");
+            url=url.replace("[","");
+            Log.d(TAG, "getBeforeNew:PPIC "+url);
+            temp.setPic(HttpHelper.getInstance().picRunner(url));
+            Log.d(TAG, "getBeforeNew: PPIC"+temp.getPic());
+            temp.setTitle(beforeNew.getStories().get(i).getTitle());
+            temp.setId(beforeNew.getStories().get(i).getId());
+            temp.setTime(beforeNew.getDate());
+            tempList.add(temp);
+        }
+        return tempList;
+    }
+
 
 }

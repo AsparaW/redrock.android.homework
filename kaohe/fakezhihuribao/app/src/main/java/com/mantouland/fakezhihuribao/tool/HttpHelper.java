@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.mantouland.fakezhihuribao.MainActivity;
 
@@ -80,27 +81,16 @@ private Bitmap bitmap;
         public Bitmap picRunner(String url) {
 
             try {
+
+                Log.d("PPIC", "picRunner: "+url);
                 URL u=new URL(url);
                 InputStream inputStream=u.openStream();
-                //对网上资源进行下载转换位图图片
                 bitmap=BitmapFactory.decodeStream(inputStream);
                 inputStream.close();
                 return bitmap;
-/*                //再一次打开
-                inputStream=u.openStream();
-                File file=new File(Environment.getExternalStorageDirectory()+"/temp/p"+url.hashCode()+".jpg");
-                FileOutputStream fileOutputStream=new FileOutputStream(file);
-                int hasRead=0;
-                while((hasRead=inputStream.read())!=-1){
-                    fileOutputStream.write(hasRead);
-                }
-                fileOutputStream.close();
-                inputStream.close();*/
-            } /*catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/ catch (MalformedURLException e) {
+
+            }
+            catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();

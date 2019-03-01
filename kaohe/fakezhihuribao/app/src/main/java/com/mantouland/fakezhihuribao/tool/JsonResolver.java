@@ -3,6 +3,7 @@ package com.mantouland.fakezhihuribao.tool;
 import android.util.Log;
 
 import com.mantouland.fakezhihuribao.bean.Article;
+import com.mantouland.fakezhihuribao.bean.BeforeNew;
 import com.mantouland.fakezhihuribao.bean.Comment;
 import com.mantouland.fakezhihuribao.bean.Extra;
 import com.mantouland.fakezhihuribao.bean.HotNew;
@@ -90,8 +91,25 @@ public class JsonResolver {
      * json处理器2
      * 处理拖动后请求的json
      */
-    void moreInfoDealer(){
-
+    public BeforeNew moreInfoDealer(String str) throws JSONException {
+        BeforeNew beforeNew = new BeforeNew();
+        JSONObject jsonObject=new JSONObject(str);
+        beforeNew.setDate(jsonObject.getString("date"));
+        Log.d(TAG, "moreInfoDealer: "+beforeNew.getDate());
+        JSONArray jsonArray=jsonObject.getJSONArray("stories");
+        List<BeforeNew.StoriesBean> storiesBeans=new ArrayList<>();
+        for (int i=0;i<jsonArray.length();i++){
+            BeforeNew.StoriesBean temp = new BeforeNew.StoriesBean();
+            temp.setId(jsonArray.getJSONObject(i).getInt("id"));
+            Log.d(TAG, "moreInfoDealer: "+temp.getId());
+            temp.setTitle(jsonArray.getJSONObject(i).getString("title"));
+            List<String > tempImage=new ArrayList<>();
+            tempImage.add(jsonArray.getJSONObject(i).getString("images"));
+            temp.setImages(tempImage);
+            storiesBeans.add(temp);
+        }
+        beforeNew.setStories(storiesBeans);
+        return beforeNew;
     }
 
     /**
