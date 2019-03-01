@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_faq"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="问题"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_add"
+        android:title="夜间模式"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_setting"
+        android:title="设置选项"
+        app:showAsAction="never" />
+
+</menu>

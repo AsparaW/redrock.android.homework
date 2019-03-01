@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:id="@+id/mainll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="wrap_content"
+                        android:layout_height="250dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="128dp"
+                        android:layout_marginLeft="128dp"
+                        android:layout_marginEnd="128dp"
+                        android:layout_marginRight="128dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#33000000"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="20"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewpager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/lineLayout_dot1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="2"
+                            android:gravity="right|center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp">
+
+
+                            <ImageView
+                                android:id="@+id/dot1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                app:srcCompat="@drawable/ic_lens_black_24dp"
+                                tools:ignore="VectorDrawableCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lineLayout_dot2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="2"
+                            android:gravity="right|center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp">
+
+
+                            <ImageView
+                                android:id="@+id/dot2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                app:srcCompat="@drawable/ic_lens_black_24dp"
+                                tools:ignore="VectorDrawableCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lineLayout_dot3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="2"
+                            android:gravity="right|center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp">
+
+
+                            <ImageView
+                                android:id="@+id/dot3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                app:srcCompat="@drawable/ic_lens_black_24dp"
+                                tools:ignore="VectorDrawableCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lineLayout_dot4"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="2"
+                            android:gravity="right|center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp">
+
+
+                            <ImageView
+                                android:id="@+id/dot4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                app:srcCompat="@drawable/ic_lens_black_24dp"
+                                tools:ignore="VectorDrawableCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lineLayout_dot5"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="2"
+                            android:gravity="right|center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp">
+
+
+                            <ImageView
+                                android:id="@+id/dot5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                app:srcCompat="@drawable/ic_lens_black_24dp"
+                                tools:ignore="VectorDrawableCompat" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
