@@ -48,12 +48,14 @@ public class NewsController {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
         Date curDate = new Date(System.currentTimeMillis());
         date = sDateFormat.format(curDate);
+        Log.d(TAG, "dateMinus: DATE"+date);
     }
     public void dateMinus(){
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMdd");
         round++;
         Date curDate = new Date(System.currentTimeMillis()- round*86400000L);
         date = sDateFormat.format(curDate);
+        Log.d(TAG, "dateMinus: DATE"+date);
     }
     public static NewsController getInstance(){
         return instance;
