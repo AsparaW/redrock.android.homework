@@ -61,7 +61,6 @@ public class ViewPassage extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_like:
-                Toast.makeText(this, "功能暂未开放", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_comment:
                 Bundle bundle = new Bundle();
@@ -73,6 +72,8 @@ public class ViewPassage extends AppCompatActivity {
                 Intent intent=new Intent(this,CommentView.class);
                 intent.putExtras(bundle);
                 this.startActivity(intent);
+                break;
+            case R.id.item_star:
                 break;
             default:
         }
@@ -90,13 +91,13 @@ public class ViewPassage extends AppCompatActivity {
         //tempWeb = tempWeb.replace("<img","<img style=\"max-width:100%;height:auto");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
+        //webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
 
         webView.getSettings().setDefaultFontSize(32);
 
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        //webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        //webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
 
 
